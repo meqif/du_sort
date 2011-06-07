@@ -10,12 +10,14 @@ ordered_data = input.sort_by do |line|
   size.sub!(",", ".")
 
   case size[-1]
-  when "K"
+  when "B"
     size = size.to_f
-  when "M"
+  when "K"
     size = size.to_f * 1024
-  when "G"
+  when "M"
     size = size.to_f * 1024**2
+  when "G"
+    size = size.to_f * 1024**3
   else # size given in blocks, don't mess with it
     size = size.to_f
   end

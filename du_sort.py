@@ -7,12 +7,14 @@ def sort_criterion(line):
     # some locales use commas as decimal separators
     size = size.replace(",", ".")
 
-    if size[-1] == "K":
+    if size[-1] == "B":
         return float(size[:-1])
-    elif size[-1] == "M":
+    elif size[-1] == "K":
         return float(size[:-1]) * 1024
-    elif size[-1] == "G":
+    elif size[-1] == "M":
         return float(size[:-1]) * 1024**2
+    elif size[-1] == "G":
+        return float(size[:-1]) * 1024**3
     else: # size given in blocks, don't mess with it
         return float(size)
 
