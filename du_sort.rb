@@ -6,6 +6,8 @@ input = INPUT_FILE.readlines
 
 ordered_data = input.sort_by do |line|
   size = line.split.first
+  # some locales use commas as decimal separators
+  size.sub!(",", ".")
 
   case size[-1]
   when "K"

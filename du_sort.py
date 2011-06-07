@@ -4,6 +4,8 @@ import sys
 
 def sort_criterion(line):
     size = line.split()[0]
+    # some locales use commas as decimal separators
+    size = size.replace(",", ".")
 
     if size[-1] == "K":
         return float(size[:-1])
