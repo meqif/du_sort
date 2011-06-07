@@ -12,7 +12,7 @@ def sort_criterion(line):
     elif size[-1] == "G":
         return float(size[:-1]) * 1024**2
     else: # size given in blocks, don't mess with it
-        return float(size[:-1])
+        return float(size)
 
 INPUT_FILE = sys.stdin
 
