@@ -20,4 +20,4 @@ input = INPUT_FILE.readlines()
 ordered_data = sorted(input, key=sort_criterion)
 
 for line in ordered_data:
-    print line.strip()
+    print line.rstrip()
