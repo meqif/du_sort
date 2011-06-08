@@ -20,14 +20,10 @@ def sort_criterion(line):
     # some locales use commas as decimal separators
     size = size.replace(",", ".")
 
-    if size[-1] == "B":
-        return float(size[:-1])
-    elif size[-1] == "K":
-        return float(size[:-1]) * 1024
-    elif size[-1] == "M":
-        return float(size[:-1]) * 1024**2
-    elif size[-1] == "G":
-        return float(size[:-1]) * 1024**3
+    EXPONENT = {"B": 0, "K": 1, "M": 2, "G": 3, "T": 4, "P": 5}
+
+    if size[-1] in EXPONENT:
+        return float(size[:-1]) * 1024 ** EXPONENT[size[-1]]
     else: # size given in blocks, don't mess with it
         return float(size)
 
