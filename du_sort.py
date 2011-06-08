@@ -27,10 +27,14 @@ def sort_criterion(line):
     else: # size given in blocks, don't mess with it
         return float(size)
 
-INPUT_FILE = sys.stdin
+def main():
+    INPUT_FILE = sys.stdin
 
-input = INPUT_FILE.readlines()
-ordered_data = sorted(input, key=sort_criterion)
+    input = INPUT_FILE.readlines()
+    ordered_data = sorted(input, key=sort_criterion)
 
-for line in ordered_data:
-    print line.rstrip()
+    for line in ordered_data:
+        print line.rstrip()
+
+if __name__ == "__main__":
+    main()
