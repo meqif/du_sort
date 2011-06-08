@@ -28,7 +28,10 @@ def sort_criterion(line):
         return float(size)
 
 def main():
-    INPUT_FILE = sys.stdin
+    if len(sys.argv) == 1 or sys.argv[1] == '-':
+        INPUT_FILE = sys.stdin
+    else:
+        INPUT_FILE = open(sys.argv[1])
 
     input = INPUT_FILE.readlines()
     ordered_data = sorted(input, key=sort_criterion)
