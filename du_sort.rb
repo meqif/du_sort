@@ -9,15 +9,11 @@ ordered_data = input.sort_by do |line|
   # some locales use commas as decimal separators
   size.sub!(",", ".")
 
-  case size[-1]
-  when "B"
-    size = size.to_f
-  when "K"
-    size = size.to_f * 1024
-  when "M"
-    size = size.to_f * 1024**2
-  when "G"
-    size = size.to_f * 1024**3
+  units = %w{B K M G T P}
+  exponent = Hash[units.zip(0..units.length)]
+
+  if exponents.has_key? size[-1]
+    size = size.to_f * 1024 ** exponents[size[-1]]
   else # size given in blocks, don't mess with it
     size = size.to_f
   end
