@@ -1,8 +1,7 @@
 #!/usr/bin/env ruby
 
-INPUT_FILE = STDIN
-
-input = INPUT_FILE.readlines
+input_file = STDIN
+input = input_file.readlines
 
 ordered_data = input.sort_by do |line|
   size = line.split.first

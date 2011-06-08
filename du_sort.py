@@ -42,20 +42,20 @@ def sort_criterion(line):
     size = size.replace(",", ".")
 
     units = ["B", "K", "M", "G", "T", "P"]
-    EXPONENT = dict(zip(units, range(0, len(units))))
+    exponent = dict(zip(units, range(0, len(units))))
 
-    if size[-1] in EXPONENT:
-        return float(size[:-1]) * 1024 ** EXPONENT[size[-1]]
+    if size[-1] in exponent:
+        return float(size[:-1]) * 1024 ** exponent[size[-1]]
     else: # size given in blocks, don't mess with it
         return float(size)
 
 def main():
     if len(sys.argv) == 1 or sys.argv[1] == '-':
-        INPUT_FILE = sys.stdin
+        input_file = sys.stdin
     else:
-        INPUT_FILE = open(sys.argv[1])
+        input_file = open(sys.argv[1])
 
-    input = INPUT_FILE.readlines()
+    input = input_file.readlines()
     ordered_data = sorted(input, key=sort_criterion)
 
     for line in ordered_data:
