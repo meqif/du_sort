@@ -20,7 +20,8 @@ def sort_criterion(line):
     # some locales use commas as decimal separators
     size = size.replace(",", ".")
 
-    EXPONENT = {"B": 0, "K": 1, "M": 2, "G": 3, "T": 4, "P": 5}
+    units = ["B", "K", "M", "G", "T", "P"]
+    EXPONENT = dict(zip(units, range(0, len(units))))
 
     if size[-1] in EXPONENT:
         return float(size[:-1]) * 1024 ** EXPONENT[size[-1]]
