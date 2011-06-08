@@ -10,7 +10,7 @@ ordered_data = input.sort_by do |line|
   size.sub!(",", ".")
 
   units = %w{B K M G T P}
-  exponent = Hash[units.zip(0..units.length)]
+  exponents = Hash[units.zip(0..units.length)]
 
   if exponents.has_key? size[-1]
     size = size.to_f * 1024 ** exponents[size[-1]]
