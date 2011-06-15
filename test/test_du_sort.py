@@ -31,6 +31,7 @@ def test_parse_du_output():
     """ Check if du output is correctly parsed. """
     assert sort_criterion("4,0K\tLICENSE") == 4096
     assert sort_criterion("0\tREADME") == 0
+    assert sort_criterion("123.0M             LONGSPACE") == 128974848
 
 def test_parse_adimensional_sizes():
     """ Check if filesizes without units are not mangled. """
