@@ -64,9 +64,7 @@ def main():
     else:
         input_file = open(sys.argv[1])
 
-    input = input_file.readlines()
-
-    for line in sort(input):
+    for line in sort(input_file.readlines()):
         print line.rstrip()
 
 if __name__ == "__main__":
