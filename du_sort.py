@@ -25,12 +25,12 @@ import sys
 class UnitMultiplierError(Exception):
    pass
 
-def get_unit_multiplier(unit):
-    units = ["B", "K", "M", "G", "T", "P"]
-    exponent = dict(zip(units, range(0, len(units))))
+UNITS = ["B", "K", "M", "G", "T", "P"]
+EXPONENT = dict(zip(UNITS, range(0, len(UNITS))))
 
-    if unit in exponent:
-        return 1024 ** exponent[unit]
+def get_unit_multiplier(unit):
+    if unit in EXPONENT:
+        return 1024 ** EXPONENT[unit]
     else:
         raise UnitMultiplierError
 
