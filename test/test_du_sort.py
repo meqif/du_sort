@@ -35,3 +35,9 @@ def test_parse_du_output():
 def test_parse_adimensional_sizes():
     """ Check if filesizes without units are not mangled. """
     assert sort_criterion("5072\ttestfile") == 5072
+
+def test_sort():
+    """ Check if sort order is correct. """
+    original = ["12.0K\tREADME", "2.0G\tfoo", "0\ttestfile", "5.3M\tblob"]
+    expected = ["0\ttestfile", "12.0K\tREADME", "5.3M\tblob", "2.0G\tfoo"]
+    assert sort(original) == expected
