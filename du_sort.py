@@ -22,18 +22,26 @@ I hope it's as useful to you as it has been to me. :)
 
 import sys
 
-class UnitMultiplierError(Exception):
-   pass
-
 UNITS = ["B", "K", "M", "G", "T", "P"]
 EXPONENT = dict(zip(UNITS, range(0, len(UNITS))))
 
-def get_unit_multiplier(unit):
+class PrefixMultiplierError(Exception):
+   pass
+
+def get_prefix_multiplier(unit):
     """ Returns the multiplier corresponding to the given binary prefix. """
     if unit in EXPONENT:
         return 1024 ** EXPONENT[unit]
     else:
-        raise UnitMultiplierError
+        raise PrefixMultiplierError, "Unknown prefix multiplier: %s" % unit
+
+def size_to_bytes(size):
+    """ Converts a filesize in a byte multiple to its value in bytes. """
+    # some locales use commas as decimal separators
+    size = size.replace(",", ".")
+
+    size, unit = size[:-1], size[-1]
+    return float(size) * get_prefix_multiplier(unit)
 
 def sort_criterion(line):
     """ Returns the size in bytes or adimensional units of a 'du' output line.
@@ -43,12 +51,9 @@ def sort_criterion(line):
 
     """
     size = line.split()[0]
-    # some locales use commas as decimal separators
-    size = size.replace(",", ".")
 
     if size[-1].isalpha():
-        size, unit = size[:-1], size[-1]
-        return float(size) * get_unit_multiplier(unit)
+        return size_to_bytes(size)
     else: # size given in blocks, don't mess with it
         return float(size)
 

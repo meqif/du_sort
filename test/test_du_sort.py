@@ -5,35 +5,33 @@
 # Licensed under the MIT License.
 # http://www.opensource.org/licenses/mit-license.php
 
-import unittest
-
+from nose.tools import *
 from du_sort import *
 
-class TestUnitMultiplier(unittest.TestCase):
-    """ Check the function get_unit_multiplier() works correctly. """
+def test_prefix_multiplier_known_prefixes():
+    """ Check if all known units are associated with the correct multiplier. """
+    for index, unit in enumerate(["B", "K", "M", "G", "T", "P"]):
+        eq_(get_prefix_multiplier(unit), 1024 ** index)
 
-    def test_known_units(self):
-        """ Check if all known units are associated with the correct multiplier. """
-        for index, unit in enumerate(["B", "K", "M", "G", "T", "P"]):
-            self.assertEqual(1024**index, get_unit_multiplier(unit))
+def test_prefix_multiplier_invalid_prefixes():
+    """ Check if invalid units are rejected. """
+    assert_raises(PrefixMultiplierError, get_prefix_multiplier, "D")
 
-    def test_invalid_units(self):
-        """ Check if invalid units are rejected. """
-        self.assertRaises(UnitMultiplierError, get_unit_multiplier, "D")
-        self.assertRaises(UnitMultiplierError, get_unit_multiplier, "KB")
+def test_convert_dimensional_sizes():
+    """ Check if sizes with units are converted to their value in bytes. """
+    assert size_to_bytes("0B") == 0
+    assert size_to_bytes("4.0K") == 4096
+    assert size_to_bytes("113.5M") == 119013376
 
-class TestSortCriterion(unittest.TestCase):
-    """ Check the function sort_criterion() works correctly. """
+def test_convert_dimensional_sizes_with_comma():
+    """ Check if sizes with commas as decimal separator are treated correctly. """
+    assert size_to_bytes("4,0K") == 4096
 
-    def test_converts_unit(self):
-        """ Check if the size is correctly retrieved and converted. """
-        self.assertEqual(sort_criterion("4,0K\tLICENSE"), 4096)
-        self.assertEqual(sort_criterion("0\tREADME"), 0)
-        self.assertEqual(sort_criterion("5072\ttestfile"), 5072)
+def test_parse_du_output():
+    """ Check if du output is correctly parsed. """
+    assert sort_criterion("4,0K\tLICENSE") == 4096
+    assert sort_criterion("0\tREADME") == 0
 
-    def test_raises_value_error(self):
-        """ Check that input with a non-numeric first column raises an error.
-
-        """
-        for input in ["REVERSED 12345", "INVALID INPUT", "INVALIDINPUT"]:
-            self.assertRaises(ValueError, sort_criterion, input)
+def test_parse_adimensional_sizes():
+    """ Check if filesizes without units are not mangled. """
+    assert sort_criterion("5072\ttestfile") == 5072
