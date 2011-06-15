@@ -9,6 +9,22 @@ import unittest
 
 from du_sort import *
 
+class Unit_Multiplier(unittest.TestCase):
+    """ Check the function get_unit_multiplier() works correctly. """
+
+    def test_known_units(self):
+        """ Check that every known unit is associated with the correct
+        multiplier.
+
+        """
+        for index, unit in enumerate(["B", "K", "M", "G", "T", "P"]):
+            self.assertEqual(1024**index, get_unit_multiplier(unit))
+
+    def test_invalid_units(self):
+        """ Check if invalid units are rejected. """
+        self.assertRaises(UnitMultiplierError, get_unit_multiplier, "D")
+        self.assertRaises(UnitMultiplierError, get_unit_multiplier, "KB")
+
 class Sort_Criterion(unittest.TestCase):
     """ Check the function sort_criterion() works correctly. """
 
@@ -17,3 +33,10 @@ class Sort_Criterion(unittest.TestCase):
         self.assertEqual(sort_criterion("4,0K\tLICENSE"), 4096)
         self.assertEqual(sort_criterion("0\tREADME"), 0)
         self.assertEqual(sort_criterion("5072\ttestfile"), 5072)
+
+    def test_raises_value_error(self):
+        """ Check that input with a non-numeric first column raises an error.
+
+        """
+        for input in ["REVERSED 12345", "INVALID INPUT", "INVALIDINPUT"]:
+            self.assertRaises(ValueError, sort_criterion, input)

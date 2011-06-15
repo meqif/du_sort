@@ -22,6 +22,18 @@ I hope it's as useful to you as it has been to me. :)
 
 import sys
 
+class UnitMultiplierError(Exception):
+   pass
+
+def get_unit_multiplier(unit):
+    units = ["B", "K", "M", "G", "T", "P"]
+    exponent = dict(zip(units, range(0, len(units))))
+
+    if unit in exponent:
+        return 1024 ** exponent[unit]
+    else:
+        raise UnitMultiplierError
+
 def sort_criterion(line):
     """ Returns the size in bytes or adimensional units of a 'du' output line.
 
@@ -33,11 +45,9 @@ def sort_criterion(line):
     # some locales use commas as decimal separators
     size = size.replace(",", ".")
 
-    units = ["B", "K", "M", "G", "T", "P"]
-    exponent = dict(zip(units, range(0, len(units))))
-
-    if size[-1] in exponent:
-        return float(size[:-1]) * 1024 ** exponent[size[-1]]
+    if size[-1].isalpha():
+        size, unit = size[:-1], size[-1]
+        return float(size) * get_unit_multiplier(unit)
     else: # size given in blocks, don't mess with it
         return float(size)
 
