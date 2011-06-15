@@ -51,6 +51,13 @@ def sort_criterion(line):
     else: # size given in blocks, don't mess with it
         return float(size)
 
+def sort(input):
+    """ Returns a copy of the input list, sorted in ascending order by the first
+    column (file size in 'du' output).
+
+    """
+    return sorted(input, key=sort_criterion)
+
 def main():
     if len(sys.argv) == 1 or sys.argv[1] == '-':
         input_file = sys.stdin
@@ -58,9 +65,8 @@ def main():
         input_file = open(sys.argv[1])
 
     input = input_file.readlines()
-    ordered_data = sorted(input, key=sort_criterion)
 
-    for line in ordered_data:
+    for line in sort(input):
         print line.rstrip()
 
 if __name__ == "__main__":
