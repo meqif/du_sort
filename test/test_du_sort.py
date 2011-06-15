@@ -9,14 +9,11 @@ import unittest
 
 from du_sort import *
 
-class Unit_Multiplier(unittest.TestCase):
+class TestUnitMultiplier(unittest.TestCase):
     """ Check the function get_unit_multiplier() works correctly. """
 
     def test_known_units(self):
-        """ Check that every known unit is associated with the correct
-        multiplier.
-
-        """
+        """ Check if all known units are associated with the correct multiplier. """
         for index, unit in enumerate(["B", "K", "M", "G", "T", "P"]):
             self.assertEqual(1024**index, get_unit_multiplier(unit))
 
@@ -25,7 +22,7 @@ class Unit_Multiplier(unittest.TestCase):
         self.assertRaises(UnitMultiplierError, get_unit_multiplier, "D")
         self.assertRaises(UnitMultiplierError, get_unit_multiplier, "KB")
 
-class Sort_Criterion(unittest.TestCase):
+class TestSortCriterion(unittest.TestCase):
     """ Check the function sort_criterion() works correctly. """
 
     def test_converts_unit(self):
