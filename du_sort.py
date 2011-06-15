@@ -28,12 +28,6 @@ def sort_criterion(line):
     Defines the sort criterion for 'du' lines in the form 'size filename', where
     size may be adimensional.
 
-    >>> sort_criterion("4,0K\tLICENSE")
-    4096.0
-    >>> sort_criterion("0\tREADME")
-    0.0
-    >>> sort_criterion("5072\ttestfile")
-    5072.0
     """
     size = line.split()[0]
     # some locales use commas as decimal separators
