@@ -29,6 +29,7 @@ UNITS = ["B", "K", "M", "G", "T", "P"]
 EXPONENT = dict(zip(UNITS, range(0, len(UNITS))))
 
 def get_unit_multiplier(unit):
+    """ Returns the multiplier corresponding to the given binary prefix. """
     if unit in EXPONENT:
         return 1024 ** EXPONENT[unit]
     else:
